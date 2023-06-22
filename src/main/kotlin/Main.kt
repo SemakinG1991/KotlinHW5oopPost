@@ -43,6 +43,11 @@ object WallService {
             println()
         }
     }
+    fun clear(){
+        posts= emptyArray()
+        lastID=0
+    }
+
 
     fun update(newPost: Post): Boolean {
         for ((index, post) in posts.withIndex()) {

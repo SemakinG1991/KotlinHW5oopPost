@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cab090ce-cbd6-4592-bd79-b6b72ecd00d6" name="Changes" comment="1,2ex of 3">
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/WallServiceTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/WallServiceTest1.kt" afterDir="false" />
+    <list default="true" id="cab090ce-cbd6-4592-bd79-b6b72ecd00d6" name="Changes" comment="Execution failed for task ':test'.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +153,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687434731189</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Execution failed for task ':test'.">
+      <created>1687447116923</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1687447116923</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -174,6 +177,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="1,2ex of 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="1,2ex of 3" />
+    <MESSAGE value="Execution failed for task ':test'." />
+    <option name="LAST_COMMIT_MESSAGE" value="Execution failed for task ':test'." />
   </component>
 </project>

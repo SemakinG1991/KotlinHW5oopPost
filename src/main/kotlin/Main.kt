@@ -4,9 +4,16 @@ fun main(args: Array<String>) {
     val donut = Donut()
     val comments = Comments()
     val copyright = Copyright()
-    val geo = Geo("One","Two")
+    val geo = Geo("One", "Two")
     val reposts = Reposts()
     val views = Views()
+    val attachments = arrayOf(
+        PhotoAttachment(Photo(1,1)),
+        VideoAttachment(Video(2,2)),
+        AudioAttachment(Audio(3,3)),
+        GraffitiAttachment(Graffiti(4,4)),
+        StickerAttachment(Sticker(5,5))
+    )
 
     val firstPost =
         Post(
@@ -22,7 +29,8 @@ fun main(args: Array<String>) {
             copyright = copyright,
             geo = geo,
             reposts = reposts,
-            views = views
+            views = views,
+            attachments = attachments
         )
     WallService.add(firstPost)
     WallService.add(
@@ -39,7 +47,8 @@ fun main(args: Array<String>) {
             copyright = copyright,
             geo = geo,
             reposts = reposts,
-            views = views
+            views = views,
+            attachments =attachments
         )
     )
     WallService.print()
@@ -58,7 +67,8 @@ fun main(args: Array<String>) {
                 copyright = copyright,
                 geo = geo,
                 reposts = reposts,
-                views = views
+                views = views,
+                attachments = attachments
             )
         )
     )
@@ -77,7 +87,8 @@ fun main(args: Array<String>) {
                 copyright = copyright,
                 geo = geo,
                 reposts = reposts,
-                views = views
+                views = views,
+                attachments = attachments
             )
         )
     )
@@ -96,7 +107,8 @@ fun main(args: Array<String>) {
                 copyright = copyright,
                 geo = geo,
                 reposts = reposts,
-                views = views
+                views = views,
+                attachments =attachments
             )
         )
     )
@@ -125,9 +137,16 @@ data class Post(
     val comments: Comments?,            //Информация о комментариях к записи, объект с полями
     val copyright: Copyright?,          //Источник материала, объект с полями
     val geo: Geo?,                      //Информация о местоположении, содержит поля
-    val likes: Likes=Likes(),          //Информация о лайках к записи, объект с полями
+    val likes: Likes = Likes(),          //Информация о лайках к записи, объект с полями
     val reposts: Reposts?,              //Информация о репостах записи («Рассказать друзьям»), объект с полями
-    val postponedId: Int = 0               //Идентификатор отложенной записи. Это поле возвращается тогда, когда запись стояла на таймере.
+    val postponedId: Int = 0,               //Идентификатор отложенной записи. Это поле возвращается тогда, когда запись стояла на таймере.
+    val attachments: Array<Attachment> = arrayOf(
+        PhotoAttachment(Photo(1, 1)),
+        VideoAttachment(Video(2, 2)),
+        AudioAttachment(Audio(3, 3)),
+        GraffitiAttachment(Graffiti(4, 4)),
+        StickerAttachment(Sticker(5, 5))
+    )
 )
 
 data class Donut(
@@ -176,6 +195,55 @@ data class Likes(
     val canLike: Boolean = false,       //информация о том, может ли текущий пользователь поставить отметку «Мне нравится»
     val canPublish: Boolean = false     //информация о том, может ли текущий пользователь сделать репост записи
 )
+
+interface Attachment {
+    val type: String
+}
+
+data class Photo(
+    val id: Int = 1,
+    val ownerId: Int = 1
+)
+
+data class PhotoAttachment(val photo: Photo) : Attachment {
+    override val type = "photo"
+}
+
+data class Video(
+    val id: Int = 2,
+    val ownerId: Int = 2
+)
+
+data class VideoAttachment(val video: Video) : Attachment {
+    override val type = "video"
+}
+
+data class Audio(
+    val id: Int = 3,
+    val ownerId: Int = 3
+)
+
+data class AudioAttachment(val audio: Audio) : Attachment {
+    override val type = "audio"
+}
+
+data class Graffiti(
+    val id: Int = 4,
+    val ownerId: Int = 4
+)
+
+data class GraffitiAttachment(val graffiti: Graffiti) : Attachment {
+    override val type = "graffiti"
+}
+
+data class Sticker(
+    val id: Int = 5,
+    val ownerId: Int = 5
+)
+
+data class StickerAttachment(val sticker: Sticker) : Attachment {
+    override val type = "sticker"
+}
 
 object WallService {
 

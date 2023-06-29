@@ -1,18 +1,21 @@
+import java.lang.RuntimeException
+
 fun main(args: Array<String>) {
     println("Hello World,Kotlin!")
-    val loveLike = Likes(10)
-    val donut = Donut()
-    val comments = Comments()
+    val myLike = Likes(10)
+    val myDonut = Donut()
+    val myComments = Comments(1, 1, 1, "MyComm1", null, 1, 1, null)
+    val myExComments = Comments(2, 2, 2, "MyComm2", null, 1, 1, null)
     val copyright = Copyright()
     val geo = Geo("One", "Two")
     val reposts = Reposts()
     val views = Views()
     val attachments = arrayOf(
-        PhotoAttachment(Photo(1,1)),
-        VideoAttachment(Video(2,2)),
-        AudioAttachment(Audio(3,3)),
-        GraffitiAttachment(Graffiti(4,4)),
-        StickerAttachment(Sticker(5,5))
+        PhotoAttachment(Photo(1, 1)),
+        VideoAttachment(Video(2, 2)),
+        AudioAttachment(Audio(3, 3)),
+        GraffitiAttachment(Graffiti(4, 4)),
+        StickerAttachment(Sticker(5, 5))
     )
 
     val firstPost =
@@ -23,9 +26,9 @@ fun main(args: Array<String>) {
             text = "TEXT",
             postType = "REPLY",
             canDelete = true,
-            likes = loveLike,
-            donut = donut,
-            comments = comments,
+            likes = myLike,
+            donut = myDonut,
+            comments = myExComments,
             copyright = copyright,
             geo = geo,
             reposts = reposts,
@@ -41,14 +44,14 @@ fun main(args: Array<String>) {
             text = "T",
             postType = "REP",
             canDelete = true,
-            likes = loveLike,
-            donut = donut,
-            comments = comments,
+            likes = myLike,
+            donut = myDonut,
+            comments = myComments,
             copyright = copyright,
             geo = geo,
             reposts = reposts,
             views = views,
-            attachments =attachments
+            attachments = attachments
         )
     )
     WallService.print()
@@ -61,29 +64,9 @@ fun main(args: Array<String>) {
                 text = "T",
                 postType = "REP",
                 canDelete = true,
-                likes = loveLike,
-                donut = donut,
-                comments = comments,
-                copyright = copyright,
-                geo = geo,
-                reposts = reposts,
-                views = views,
-                attachments = attachments
-            )
-        )
-    )
-    println(
-        WallService.update(
-            Post(
-                id = 2,
-                ownerId = 22,
-                fromId = 30,
-                text = "T",
-                postType = "REP",
-                canDelete = true,
-                likes = loveLike,
-                donut = donut,
-                comments = comments,
+                likes = myLike,
+                donut = myDonut,
+                comments = myComments,
                 copyright = copyright,
                 geo = geo,
                 reposts = reposts,
@@ -101,18 +84,20 @@ fun main(args: Array<String>) {
                 text = "T",
                 postType = "REP",
                 canDelete = true,
-                likes = loveLike,
-                donut = donut,
-                comments = comments,
+                likes = myLike,
+                donut = myDonut,
+                comments = myComments,
                 copyright = copyright,
                 geo = geo,
                 reposts = reposts,
                 views = views,
-                attachments =attachments
+                attachments = attachments
             )
         )
     )
+    WallService.createComment(1, myExComments)   //4
     WallService.print()
+
 }
 
 data class Post(
@@ -121,11 +106,11 @@ data class Post(
     val fromId: Int = 0,                //Идентификатор автора записи
     val createdBy: Int = 0,             //Идентификатор администратора
     val date: Int = 0,                  //Время публикации записи
-    val text: String = "",               //Текст записи
+    val text: String = "Default text",               //Текст записи
     val replyOwnerId: Int = 0,               //Идентификатор владельца записи, в ответ на которую была оставлена текущая.
     val replyPostId: Int = 0,                //Идентификатор записи, в ответ на которую была оставлена текущая.
     val views: Views?,                   //Информация о просмотрах записи. Объект с единственным полем
-    val postType: String = " ",                //Тип записи, может принимать следующие значения: post, copy, reply, postpone, suggest.
+    val postType: String = "Default postType",                //Тип записи, может принимать следующие значения: post, copy, reply, postpone, suggest.
     val signerId: Int = 0,                   //Идентификатор автора, если запись была опубликована от имени сообщества и подписана пользователем;
     val canPin: Boolean = true,                 //Информация о том, может ли текущий пользователь закрепить запись
     val canDelete: Boolean = true,                 //Информация о том, может ли текущий пользователь удалить запись
@@ -150,11 +135,11 @@ data class Post(
 )
 
 data class Donut(
-    val is_donut: Boolean = true,   //запись доступна только платным подписчикам VK Donut;
-    val PaidDuration: Int = 0,      //время, в течение которого запись будет доступна только платным подписчикам VK Donut;
+    val is_donut: Boolean = true,   //запись доступна только платным подписчикам VK Donut
+    val PaidDuration: Int = 0,      //Время, в течение которого запись будет доступна только платным подписчикам VK Donut
 //val placeholder (object) — заглушка для пользователей, которые не оформили подписку VK Donut. Отображается вместо содержимого записи.
     val canPublishFreeCopy: Boolean = true, //можно ли открыть запись для всех пользователей, а не только подписчиков VK Donut;
-    val editMode: String = "", //информация о том, какие значения VK Donut можно изменить в записи. Возможные значения:
+    val editMode: String = " " // Информация о том, какие значения VK Donut можно изменить в записи. Возможные значения:
     //all — всю информацию о VK Donut.
     //duration — время, в течение которого запись будет доступна только платным подписчикам VK Donut.
 )
@@ -175,11 +160,14 @@ data class Reposts(
 )
 
 data class Comments(
-    val count: Int = 0,             // количество комментариев
-    val canPost: Boolean = false,   //информация о том, может ли текущий пользователь комментировать запись
-    val groupsCanPost: Boolean = false,   //информация о том, могут ли сообщества комментировать запись
-    val canClose: Boolean = false,  //может ли текущий пользователь закрыть комментарии к записи
-    val canOpen: Boolean = false  // может ли текущий пользователь открыть комментарии к записи
+    val id: Int = 0,                         // Идентификатор комментария.
+    val fromId: Int = 0,                        // Идентификатор автора комментария.
+    val date: Int = 0,                       //Дата создания комментария в формате Unixtime.
+    val text: String = "Default text comment",  //Текст комментария.
+    val donut: Donut?,                           // является ли комментатор подписчиком VK Donut.
+    val reply_to_user: Int = 0,      //Идентификатор пользователя или сообщества, в ответ которому оставлен текущий комментарий (если применимо).
+    val reply_to_comment: Int = 0,  //Идентификатор комментария, в ответ на который оставлен текущий (если применимо).
+    val attachments: Attachment?     //Медиавложения комментария (фотографии, ссылки и т.п.). Описание массива attachments находится на отдельной странице.
 )
 
 data class Copyright(
@@ -245,10 +233,17 @@ data class StickerAttachment(val sticker: Sticker) : Attachment {
     override val type = "sticker"
 }
 
+class PostNotFoundException(message: String) :
+    RuntimeException(message) //3: throw PostNotFoundException("Нет Поста с таким $postId")
+
 object WallService {
 
     private var posts = emptyArray<Post>()
     private var lastID: Int = 0
+    private var lastIDComm: Int = 0
+    private var comments = emptyArray<Comments>()            //1
+
+
     fun add(post: Post): Post {
         posts += post.copy(id = ++lastID, likes = post.likes.copy())
         return posts.last()
@@ -262,6 +257,7 @@ object WallService {
     }
 
     fun clear() {
+        comments = emptyArray()
         posts = emptyArray()
         lastID = 0
     }
@@ -276,7 +272,19 @@ object WallService {
         }
         return false
     }
+
+    fun createComment(postId: Int, comment: Comments): Comments {     //2
+        for (post in posts) {
+            if (post.id == postId) {
+                comments += comment.copy(id=++lastIDComm)
+                println("Я добавил коммент в массив!")
+                return comments.last()
+            }
+        }
+        throw PostNotFoundException("Нет Поста с таким id: $postId")
+    }
 }
+
 
 
 
